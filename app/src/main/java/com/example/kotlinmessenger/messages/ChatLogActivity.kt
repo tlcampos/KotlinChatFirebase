@@ -62,6 +62,7 @@ class ChatLogActivity : AppCompatActivity() {
                         adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
                 }
+                recyclerview_chat_log.scrollToPosition(adapter.itemCount -1)
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -98,9 +99,16 @@ class ChatLogActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 Log.d("ChatLogActivity", "Messagem salva com sucesso")
                 edittext_chat_log.text.clear()
+                recyclerview_chat_log.scrollToPosition(adapter.itemCount -1)
             }
 
         toReference.setValue(chatMessage)
+
+        val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
+        latestMessageRef.setValue(chatMessage)
+
+        val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
+        latestMessageToRef.setValue(chatMessage)
     }
 }
 
