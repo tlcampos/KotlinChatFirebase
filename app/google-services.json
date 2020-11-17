@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "979293114505",
+    "firebase_url": "https://kotlinfirebasemessenger-farel.firebaseio.com",
+    "project_id": "kotlinfirebasemessenger-farel",
+    "storage_bucket": "kotlinfirebasemessenger-farel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979293114505:android:e9fec4c476895424f37658",
+        "android_client_info": {
+          "package_name": "com.example.kotlinmessenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979293114505-3rdjr363eo2jusptc2t5f5qalmq2rl6u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoelMV0qYkitmxuiBouRheJuMDAr89gGc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979293114505-3rdjr363eo2jusptc2t5f5qalmq2rl6u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

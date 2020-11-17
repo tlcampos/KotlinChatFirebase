@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">KotlinMessenger</string>
+    <string name="name">Nome</string>
+    <string name="password">Senha</string>
+    <string name="email">Email</string>
+</resources>
