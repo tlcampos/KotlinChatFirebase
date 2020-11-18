@@ -64,8 +64,8 @@ class RegisterActivity : AppCompatActivity() {
             ).show()
             return
         }
-        Log.d("MainActivity", "Email é: $email")
-        Log.d("MainActivity", "Senha é: $password")
+        Log.d("RegisterActivity", "Email é: $email")
+        Log.d("RegisterActivity", "Senha é: $password")
 
         //Criação do usuário no Firebase autentication com usuário e senha
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)

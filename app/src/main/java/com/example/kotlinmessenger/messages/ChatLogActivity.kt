@@ -20,18 +20,18 @@ import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
 
 
-val adapter = GroupAdapter<ViewHolder>()
-
-val toUser: User? = null
-
 class ChatLogActivity : AppCompatActivity() {
+    val adapter = GroupAdapter<ViewHolder>()
+
+    var toUser: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
 
         recyclerview_chat_log.adapter = adapter
 
-        val toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+        toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
 
         supportActionBar?.title = toUser?.username
 
@@ -62,7 +62,7 @@ class ChatLogActivity : AppCompatActivity() {
                         adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
                 }
-                recyclerview_chat_log.scrollToPosition(adapter.itemCount -1)
+                recyclerview_chat_log.scrollToPosition(adapter.itemCount - 1)
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -89,25 +89,27 @@ class ChatLogActivity : AppCompatActivity() {
 
         if (fromId == null) return
 
-        //val ref = FirebaseDatabase.getInstance().getReference("/messages").push()
-        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+        val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
 
         val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId/").push()
 
-        val chatMessage = ChatMessage(ref.key!!, text, fromId, toId!!, System.currentTimeMillis() / 1000)
-        ref.setValue(chatMessage)
+        val chatMessage =
+            ChatMessage(reference.key!!, text, fromId, toId!!, System.currentTimeMillis() / 1000)
+        reference.setValue(chatMessage)
             .addOnSuccessListener {
                 Log.d("ChatLogActivity", "Messagem salva com sucesso")
                 edittext_chat_log.text.clear()
-                recyclerview_chat_log.scrollToPosition(adapter.itemCount -1)
+                recyclerview_chat_log.scrollToPosition(adapter.itemCount - 1)
             }
 
         toReference.setValue(chatMessage)
 
-        val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
+        val latestMessageRef =
+            FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
         latestMessageRef.setValue(chatMessage)
 
-        val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
+        val latestMessageToRef =
+            FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
         latestMessageToRef.setValue(chatMessage)
     }
 }
@@ -138,7 +140,6 @@ class ChatToItem(val text: String, val user: User) : Item<ViewHolder>() {
     }
 
     override fun getLayout(): Int {
-        Log.d("ChatLogActivity", "Layout")
         return R.layout.chat_to_row
     }
 

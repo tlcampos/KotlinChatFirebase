@@ -14,7 +14,7 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.latest_message_row.view.*
 
 class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>() {
-    var chatPartnerUser? = null
+    var chatPartnerUser:User? = null
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.message_textview_latest_message.text = chatMessage.text
@@ -36,7 +36,6 @@ class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>() {
 
             override fun onCancelled(error: DatabaseError) {
             }
-
         })
     }
 

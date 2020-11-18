@@ -38,11 +38,16 @@ class LatestMessagesActivity : AppCompatActivity() {
 
         recyclerview_latest_messages.adapter = adapter
 
-        recyclerview_latest_messages.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        recyclerview_latest_messages.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
         // Adicionar evento de click no adapter
-        adapter.setOnItemClickListener{item, view ->
-            Log.d("LatestMessagesActivity","Evento de click")
+        adapter.setOnItemClickListener { item, view ->
+            Log.d("LatestMessagesActivity", "Evento de click")
 
             val intent = Intent(this, ChatLogActivity::class.java)
 
@@ -59,6 +64,7 @@ class LatestMessagesActivity : AppCompatActivity() {
 
         verifyUserLoggedIn()
     }
+
     val latestMessageMap = HashMap<String, ChatMessage>()
 
     private fun refreshRecyclerViewMessage() {
@@ -71,15 +77,15 @@ class LatestMessagesActivity : AppCompatActivity() {
     private fun ListenForLatestMessages() {
         val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId")
-        ref.addChildEventListener(object : ChildEventListener{
+        ref.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val chatMessage = snapshot.getValue(ChatMessage::class.java)?:return
+                val chatMessage = snapshot.getValue(ChatMessage::class.java) ?: return
                 latestMessageMap[snapshot.key!!] = chatMessage
                 refreshRecyclerViewMessage()
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val chatMessage = snapshot.getValue(ChatMessage::class.java)?:return
+                val chatMessage = snapshot.getValue(ChatMessage::class.java) ?: return
                 latestMessageMap[snapshot.key!!] = chatMessage
                 refreshRecyclerViewMessage()
             }
@@ -95,12 +101,13 @@ class LatestMessagesActivity : AppCompatActivity() {
 
         })
     }
+
     val adapter = GroupAdapter<ViewHolder>()
 
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-        ref.addListenerForSingleValueEvent(object: ValueEventListener{
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 currentUser = snapshot.getValue(User::class.java)
                 Log.d("LatestMessageActivity", "Usuário atual: ${currentUser?.username}")
@@ -123,13 +130,13 @@ class LatestMessagesActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
-            R.id.menu_new_message ->{
+        when (item.itemId) {
+            R.id.menu_new_message -> {
                 val intent = Intent(this, NewMessageActivity::class.java)
                 startActivity(intent)
 
             }
-            R.id.menu_sign_out ->{
+            R.id.menu_sign_out -> {
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags -= Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
