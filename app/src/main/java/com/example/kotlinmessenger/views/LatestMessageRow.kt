@@ -26,7 +26,7 @@ class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>() {
             chatPartnerId = chatMessage.fromId
         }
 
-        val ref = FirebaseDatabase.getInstance().getReference("/user/$chatPartnerId")
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
               chatPartnerUser = snapshot.getValue(User::class.java)
