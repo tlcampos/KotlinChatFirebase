@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.models.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -40,7 +41,8 @@ class NewMessageActivity : AppCompatActivity() {
                 snapshot.children.forEach {
                     Log.d("NewMessageActivity", it.toString())
                     val user = it.getValue(User::class.java)
-                    if (user != null) {
+                    val uid = FirebaseAuth.getInstance().uid
+                    if (user != null && user.uid!=(uid)) {
                         adapter.add(UserItem(user))
                     }
                 }
@@ -48,7 +50,6 @@ class NewMessageActivity : AppCompatActivity() {
                 adapter.setOnItemClickListener { item, view ->
 
                     val userItem = item as UserItem
-
                     val intent = Intent(view.context, ChatLogActivity::class.java)
                     intent.putExtra(USER_KEY, userItem.user)
                     startActivity(intent)
