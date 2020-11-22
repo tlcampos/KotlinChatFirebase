@@ -12,20 +12,12 @@ import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.messages.NewMessageActivity.Companion.USER_KEY
 import com.example.kotlinmessenger.models.ChatMessage
 import com.example.kotlinmessenger.models.User
-import com.example.kotlinmessenger.registerlogin.RegisterActivity
 import com.example.kotlinmessenger.views.LatestMessageRow
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_latest_messages.*
-import kotlinx.android.synthetic.main.latest_message_row.view.*
-import kotlinx.android.synthetic.main.user_row_new_message.view.*
-import kotlin.math.log
-
-
 class LatestMessagesActivity : AppCompatActivity() {
 
     companion object {
